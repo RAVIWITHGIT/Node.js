@@ -1,0 +1,5 @@
+const res = require("./child")
+console.log(res)
+console.log(res.a)
+console.log(res.b)
+console.log(res.c())
