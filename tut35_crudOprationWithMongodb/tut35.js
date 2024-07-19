@@ -17,6 +17,15 @@ app.post('/', async (req,res)=>{
     res.send({status:"001",result})
 })
 
+app.put('/:name', async (req,res)=>{
+    let data = await dbconnection();
+    let result = await data.updateOne(
+        {name:req.params.name},
+        {$set:req.body}
+    )
+    res.send({status:"001",result})
+})
+
 
 app.listen(8080,()=>{
     console.log('server run with 8080 port')
