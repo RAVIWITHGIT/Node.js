@@ -1,6 +1,7 @@
 const express = require('express');
 const dbconnection = require('./tut35Mongodb');
 const app = express();
+app.use(express.json())
 
 
 app.get('/', async (req,res)=>{
@@ -8,6 +9,12 @@ app.get('/', async (req,res)=>{
     data = await data.find().toArray();
     res.send(data)
 
+})
+
+app.post('/', async (req,res)=>{
+    let data = await dbconnection()
+    let result = await data.insertOne(req.body)
+    res.send({status:"001",result})
 })
 
 
