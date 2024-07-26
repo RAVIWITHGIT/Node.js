@@ -1,5 +1,6 @@
 const express = require('express');
 const dbconnection = require('./tut35Mongodb');
+const mongodb = require('mongodb')
 const app = express();
 app.use(express.json())
 
@@ -24,6 +25,12 @@ app.put('/:name', async (req,res)=>{
         {$set:req.body}
     )
     res.send({status:"001",result})
+})
+
+app.delete("/:id", async (req,res)=>{
+    const data = await dbconnection();
+    const result = await data.deleteOne({_id: new mongodb.ObjectId( req.params.id)})
+    res.send(result)
 })
 
 
