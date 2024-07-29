@@ -34,6 +34,21 @@ app.put('/updateProduct/:_id',async (req,res)=>{
     res.send(result)
 })
 
+app.get('/searchProduct/:key', async (req,res)=>{
+    let data = await prodcutModel.find(
+        {
+            "$or":[
+                {"name":{$regex:req.params.key}},
+                {"price":{$regex:req.params.key}},
+                {"quentity":{$regex:req.params.key}}
+            ]
+        }
+    )
+    res.send(data)
+
+
+})
+
 app.listen(8080,()=>{
     console.log("server run on port 8080 port")
 })
