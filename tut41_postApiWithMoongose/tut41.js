@@ -2,6 +2,11 @@ const express = require('express');
 const prodcutModel = require('./tut41Product');
 require('../tut41_postApiWithMoongose/tut41Confing')
 const app = express();
+
+//*********************************** for multer
+const multer = require('multer')
+
+
 app.use(express.json())
 
 
@@ -47,6 +52,24 @@ app.get('/searchProduct/:key', async (req,res)=>{
     res.send(data)
 
 
+})
+
+//**********************************  upload file
+
+const upload = multer({
+    storage:multer.diskStorage({
+        destination:function (req,file,cb) {
+            cb(null,"uploads")
+        },
+        filename:function (req,file,cb) {
+            cb(null,file.fieldname+"-"+Date.now()+".jpg")
+        }
+    })
+}).single("uploadfile")
+
+app.post('/uploadFile',upload,(req,res)=>{
+    console.log('*********************',req.file.path)
+    res.send("upload file")
 })
 
 app.listen(8080,()=>{
