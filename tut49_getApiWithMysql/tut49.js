@@ -1,0 +1,31 @@
+const express = require('express');
+const con = require('./tut49Config');
+const app = express();
+app.use(express.json())
+
+
+app.get('/getMys',(req,res)=>{
+    con.query('select * from users',(err,result)=>{
+        if(err){
+            res.send(err)
+        }else{
+            res.send(result)
+        }
+    })
+})
+
+//********************** post api with mysql
+app.post('/postMys',(req,res)=>{
+    const data = req.body;
+    con.query("INSERT INTO users SET ?",data,(error,result,field)=>{
+        if(error){
+            res.send(error)
+        }
+        res.send(result)
+    })
+
+})
+
+app.listen(8080,()=>{
+    console.log('connect with server on port 8080 port')
+})
