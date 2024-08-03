@@ -26,6 +26,16 @@ app.post('/postMys',(req,res)=>{
 
 })
 
+
+//***************************  update api with mysql
+app.put('/updateMys/:id',(req,res)=>{
+    const data = [req.body.name,req.body.password,req.params.id]
+    con.query("UPDATE users SET Name=?,Password=? where id = ?",data,(err,result,fields)=>{
+        if(err) throw err;
+        res.send(result);
+    })
+})
+
 app.listen(8080,()=>{
     console.log('connect with server on port 8080 port')
 })
